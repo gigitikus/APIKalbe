@@ -1,0 +1,432 @@
+﻿
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            <div class="col">
+                <h4><span class="badge badge-success">PAID</span> Bill</h4>
+            </div>
+            <div class="col">
+                <input type="text" readonly="readonly"
+                       class="form-control"
+                       placeholder="Please find attached your invoice. Thank you for timely payment." />
+            </div>
+        </div>
+        <div class="col-4">
+            <img id="companyLogo" />
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-5">
+            <div class="col-lg-6">
+                <h6>Invoice No.</h6>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">#</span>
+                    </div>
+                    <input type="text" class="form-control"
+                           id="invNumber"
+                           value="@ViewBag.InvoiceNo" readonly="readonly" />
+                </div>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <h6>Language</h6>
+                        <select class="form-control" id="LanguageList">
+                            <option></option>
+                            @foreach (var l in ViewBag.Languages)
+                            {
+                                <option value="@l.LanguageName">@l.LanguageName</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-5">
+            <div class="col">
+                <div class="form-group">
+                    <h6>Currency</h6>
+                    <select class="form-control" id="currencyList">
+                        <option></option>
+                        @foreach (var m in ViewBag.Currencies)
+                        {
+                            <option value="@m.CurrencyId">@m.CurrencyName - @m.CurrencyId</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-5">
+            <div class="col-lg-8">
+                <div class="form-group">
+                    <h6>From</h6>
+                    <textarea id="txtFrom" cols="50" rows="4" class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="form-group">
+                    <h6>To</h6>
+                    <select class="form-control" id="CustomerList">
+                        <option></option>
+                        @foreach (var l in ViewBag.Customers)
+                        {
+                            <option value="@l.CustomerId">@l.ContactPerson - @l.CompanyName</option>
+                        }
+                    </select>
+                </div>
+                <div class="row" id="divCustomer"></div>
+            </div>
+        </div>
+        <div class="col-2"></div>
+        <div class="col-5">
+            <div class="col">
+                <div class="form-group">
+                    <h6>Date</h6>
+                    <input type="text" class="form-control datepicker"
+                           name="invoicedate" id="invDate">
+                </div>
+                <div class="form-group" id="divDueDate">
+                    <h6>Invoice Due</h6>
+                    <input type="text" class="form-control" id="invDue" readonly="readonly" />
+                </div>
+                <div class="form-group">
+                    <h6>Purchase Order No.</h6>
+                    <div class="input-group">
+                        <input type="text" class="form-control" disabled="disabled" id="txtPO" />
+                        <div class="input-group-append">
+                            <button type="button"
+                                    class="btn btn-success"
+                                    data-toggle="modal"
+                                    data-target="#modal-lg"
+                                    id="btnPO">
+                                PO
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th width="50%" style="text-align:left">Name</th>
+                    <th style="text-align:right">Quantity</th>
+                    <th style="text-align:right">Rate</th>
+                    <th style="text-align:right">Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <textarea id="summernote">
+                            Type order hear
+                        </textarea>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" id="Quantity" />
+                    </td>
+                    <td>
+
+                        <input type="text" class="form-control" id="Rate" />
+
+                        <select class="form-control" style="width:75px;text-align:right;"
+                                id="uomList">
+                            @foreach (var l in ViewBag.UOM)
+                            {
+                                <option value="@l.UOMId">@l.UOMId</option>
+                            }
+                        </select>
+
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="spanCurrency">
+                            </div>
+                            <input type="text" class="form-control" id="Amount" />
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            <button type="button" class="btn btn-primary btn-block">
+                <i class="fa fa-bell"></i> New Line
+            </button>
+        </div>
+        <div class="col-sm-4">
+
+        </div>
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="col">
+                    <h6>Sub Total</h6>
+                </div>
+                <div class="col-lg-3">
+                    150.00
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <input type="text" value="Easter Dicsount" disabled="disabled" />
+                        </div>
+                        <input type="text" class="money" id="txtDiscount" style="width:48px" />
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    15.00
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col">
+                    <h6>Total (USD)</h6>
+                </div>
+                <div class="col-lg-3">
+                    135.00
+                </div>
+            </div>
+            <div class="row">
+                <div class="col"></div>
+                <div class="col-6">
+                    <button class="btn btn-success btn-sm" id="btnSubmit">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal-lg">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Select Purchase Order</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-tools">
+                                    <div class="input-group input-group-sm" style="width: 150px;">
+                                        <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+                                        <div class="input-group-append">
+                                            <button type="submit" class="btn btn-primary">
+                                                <i class="fas fa-search"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body table-responsive p-0">
+                                <table class="table table-hover text-nowrap" id="poTable">
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                </div>
+                <!-- /.row -->
+            </div>
+            @*<div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>*@
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<script src="~/js/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).on('change', '#CustomerList', function () {
+        var data = { CustomerId: $('#CustomerList').val() };
+        if (data.CustomerId === "") {
+            $('#divCustomer').empty();
+            document.getElementById("companyLogo").src = "";
+            document.getElementById("companyLogo").width = 0;
+            document.getElementById("companyLogo").height = 0;
+        }
+        else {
+            $.ajax({
+                type: "POST",
+                url: "/Invoice/GetCustomer",
+                data: { CustomerId: data.CustomerId },
+                success: function (response) {
+                    console.log(response);
+                    const myJson = JSON.stringify(response);
+                    let obj = JSON.parse(myJson);
+                    $('#divCustomer').empty();
+                    $('#divCustomer').append('<div class="col-sm-12" id="divCustomer">' +
+                        '<label style="font-size:15px;">' + obj.address1 + '</lable> <br>' +
+                        '<label style="font-size:15px;">' + obj.address2 + '</lable> <br>' +
+                        '<label style="font-size:15px;">' + obj.city + '</lable>' +
+                        '</div>'
+                    );
+                    document.getElementById("companyLogo").src = "data:image/png;base64," + obj.companyLogo;
+                    document.getElementById("companyLogo").width = 178;
+                    document.getElementById("companyLogo").height = 114;
+                }
+            });
+        };
+    })
+</script>
+<script>
+    $(document).on('change', '#currencyList', function () {
+        var data = { CurrencyId: $('#currencyList').val() };
+        if (data.CurrencyId === "") {
+            $('#spanCurrency').empty();
+            $('#spanCurrency').append('</span>');
+        } else {
+            $.ajax({
+                type: "POST",
+                url: "/Invoice/GetCurrency",
+                data: { CurrencyId: data.CurrencyId },
+                success: function (response) {
+                    console.log(response);
+                    const myJson = JSON.stringify(response);
+                    let obj = JSON.parse(myJson);
+                    $('#spanCurrency').empty();
+                    $('#spanCurrency').append(obj.currencyId + '</span>');
+                }
+            });
+        };
+    })
+</script>
+<script>
+    $(document).on('click', '#btnPO', function () {
+        var data = { CustomerId: $('#CustomerList').val() }
+        if (data.CustomerId === "") {
+            alert("Please select customer first");
+        } else {
+            $.ajax({
+                type: "GET",
+                url: "/Invoice/GetPO",
+                data: { CustomerId: data.CustomerId },
+                success: function (response) {
+                    console.log(response);
+                    const myJson = JSON.stringify(response);
+                    let obj = JSON.parse(myJson);
+                    let table = '<thead>' +
+                        '<tr>' +
+                        '<th>PO Number</th>' +
+                        '<th>Date</th>' +
+                        '<th>Company</th>' +
+                        '<th>Currency</th>' +
+                        '<th>PIC</th>' +
+                        '<th></th>' +
+                        '</tr>' +
+                        '</thead>' +
+                        '<tbody>';
+
+                    obj.forEach(function (d) {
+                        table += '<tr id="' + d.poNumber + '"><td class="row-data">' + d.poNumber + '</td>';
+                        table += '<td>' + d.poDate + '</td>';
+                        table += '<td>' + d.companyName + '</td>';
+                        table += '<td>' + d.currencyId + '</td>';
+                        table += '<td>' + d.pic + '</td>';
+                        table += '<td><button class="btn btn-block btn-outline-success btn-xs" onclick="getPONumber()">Select</button></td></tr>';
+                    });
+
+                    table += '</tbody>';
+
+                    $('#poTable').empty().html(table);
+
+                }
+            })
+        }
+    })
+</script>
+<script>
+    function getPONumber() {
+        var rowId = event.target.parentNode.parentNode.id;
+        var data = document.getElementById(rowId).querySelectorAll('.row-data');
+        var poNumber = data[0].innerHTML;
+        document.getElementById("txtPO").setAttribute('value', poNumber);
+        /*alert(poNumber);*/
+    }
+</script>
+<script>
+    $(document).on('click', '#btnSubmit', function () {
+        let Immediately;
+        let invoiceDue;
+
+        if (document.getElementById("invDue").value == "Immediately") {
+            Immediately = 1;
+            invoiceDue = document.getElementById("invDate").value;
+        } else {
+            Immediately = 0;
+            invoiceDue = document.getElementById("invDate").value;
+        }
+
+        const invDate = new Date(document.getElementById("invDate").value);
+        const invDue = new Date(invoiceDue);
+
+        var Header1 = {
+            InvoiceNo: document.getElementById("invNumber").value,
+            Language: document.getElementById("LanguageList").value,
+            Currency: document.getElementById("CurrencyList").value,
+            Sender: document.getElementById("txtFrom").value,
+            Recipient: document.getElementById("CustomerList").value,
+            InvoiceDate: invDate,
+            InvoiceDue: invDue,
+            IsImmediately: boolean(Immediately),
+            PurchaseOrderNo: document.getElementById("txtPO").value,
+            Discount: document.getElementById("txtDiscount").value
+        };
+
+        var Lines1 = {
+            InvoiceNo: document.getElementById("invNumber").value,
+            InvoiceLineNo: 1,
+            ItemName: document.getElementById("summernote").value,
+            Quantity: document.getElementById("Quantity").value,
+            Rate: document.getElementById("Rate").value,
+            UOM: document.getElementById("uomList").value,
+            Amount: document.getElementById("Amount").value
+        };
+
+        var PostInvoices = {
+            Header: Header1,
+            Lines: [Lines1]
+        };
+
+        const myJson = JSON.stringify(PostInvoices);
+        let obj = JSON.parse(myJson);
+
+        alert(obj);
+
+        $.ajax({
+            type: "POST",
+            url: "/Invoice/AddInvoices",
+            dataType: "json",
+            data: { postInvoices: PostInvoices },
+            traditional: true,
+            contentType: "application/json",
+            success: function (response) {
+                console.log(response);
+                const myJson = JSON.stringify(response);
+                let obj = JSON.parse(myJson);
+            }
+        })
+    })
+</script>
